@@ -75,24 +75,25 @@ export default function Tributes() {
 
   return (
     <section id="tributes" className="scroll-mt-20">
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 py-20">
-        <h2 className="font-serif text-3xl sm:text-4xl font-light text-stone-900 italic mb-4">
-          Send a Tribute
+      <div className="max-w-6xl mx-auto px-6 py-24">
+        <p className="text-sm tracking-[0.2em] uppercase text-neutral-400 mb-3">Honor Her Memory</p>
+        <h2 className="text-4xl sm:text-5xl font-bold uppercase mb-4">
+          Send a<br /><span className="font-light">Tribute</span>
         </h2>
-        <p className="text-sm text-stone-400 font-light mb-10">
+        <p className="text-sm text-neutral-500 font-light mb-12">
           Honor Rebecca's memory with flowers, a tree, or a charitable donation.
         </p>
 
         {/* Filter tabs */}
-        <div className="flex flex-wrap gap-1 mb-12">
+        <div className="flex flex-wrap gap-2 mb-12">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setFilter(f.id)}
-              className={`px-4 py-1.5 text-sm font-light transition-colors rounded-full ${
+              className={`px-5 py-2 text-sm transition-colors ${
                 filter === f.id
-                  ? 'bg-stone-900 text-white'
-                  : 'text-stone-500 hover:text-stone-900'
+                  ? 'bg-black text-white'
+                  : 'text-neutral-500 hover:text-black border border-neutral-200'
               }`}
             >
               {f.label}
@@ -101,33 +102,32 @@ export default function Tributes() {
         </div>
 
         {/* Tribute grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((tribute) => {
             const Icon = tribute.icon
             const isSent = sent.has(tribute.id)
             return (
               <div
                 key={tribute.id}
-                className={`group cursor-pointer ${isSent ? 'opacity-60' : ''}`}
+                className={`group cursor-pointer ${isSent ? 'opacity-50' : ''}`}
                 onClick={() => !isSent && setSelected(tribute.id)}
               >
-                {/* Icon area */}
-                <div className={`w-full aspect-[4/3] rounded-lg flex items-center justify-center mb-4 transition-colors ${
-                  selected === tribute.id ? 'bg-stone-100 ring-1 ring-stone-900' : 'bg-stone-50 group-hover:bg-stone-100'
+                <div className={`aspect-[4/3] flex items-center justify-center mb-5 transition-colors ${
+                  selected === tribute.id
+                    ? 'bg-neutral-100 ring-2 ring-black'
+                    : 'bg-neutral-50 group-hover:bg-neutral-100'
                 }`}>
-                  <Icon className="w-10 h-10 text-stone-300 group-hover:text-stone-400 transition-colors" strokeWidth={1} />
+                  <Icon className="w-12 h-12 text-neutral-300 group-hover:text-neutral-400 transition-colors" strokeWidth={1} />
                 </div>
-
                 <div className="flex items-start justify-between mb-1">
-                  <h3 className="text-sm text-stone-900">{tribute.title}</h3>
-                  <span className="text-sm text-stone-900 font-medium">{tribute.price}</span>
+                  <h3 className="text-sm font-medium">{tribute.title}</h3>
+                  <span className="text-sm font-bold">{tribute.price}</span>
                 </div>
-                <p className="text-[13px] text-stone-400 font-light leading-relaxed mb-3">{tribute.description}</p>
+                <p className="text-[13px] text-neutral-400 font-light leading-relaxed mb-3">{tribute.description}</p>
 
                 {isSent ? (
-                  <span className="inline-flex items-center gap-1.5 text-[13px] text-sage-600">
-                    <Check className="w-3.5 h-3.5" />
-                    Sent
+                  <span className="inline-flex items-center gap-1.5 text-sm text-neutral-500">
+                    <Check className="w-4 h-4" /> Sent
                   </span>
                 ) : selected === tribute.id ? (
                   <button
@@ -135,7 +135,7 @@ export default function Tributes() {
                       e.stopPropagation()
                       handleSend(tribute.id)
                     }}
-                    className="text-[13px] bg-stone-900 text-white px-5 py-2 rounded-full hover:bg-stone-800 transition-colors"
+                    className="bg-black text-white text-sm px-6 py-2.5 hover:bg-neutral-800 transition-colors"
                   >
                     Confirm & Send
                   </button>
@@ -145,7 +145,6 @@ export default function Tributes() {
           })}
         </div>
       </div>
-
       <div className="rule max-w-6xl mx-auto" />
     </section>
   )

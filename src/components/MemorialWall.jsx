@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flame, Heart, Send, ChevronDown } from 'lucide-react'
+import { Flame, Heart, Send, ChevronDown, MessageCircle } from 'lucide-react'
 
 const initialPosts = [
   {
@@ -93,38 +93,40 @@ export default function MemorialWall() {
   }
 
   return (
-    <section id="memorial-wall" className="scroll-mt-20">
-      <div className="max-w-3xl mx-auto px-6 sm:px-8 py-20">
-        <div className="flex items-baseline justify-between mb-12">
-          <h2 className="font-serif text-3xl sm:text-4xl font-light text-stone-900 italic">
-            Memorial Wall
-          </h2>
-          <span className="text-[13px] text-stone-400 font-light">{posts.length} messages</span>
+    <section id="memorial-wall" className="scroll-mt-20 bg-neutral-50">
+      <div className="max-w-6xl mx-auto px-6 py-24">
+        <div className="flex items-end justify-between mb-16">
+          <div>
+            <p className="text-sm tracking-[0.2em] uppercase text-neutral-400 mb-3">Share a Memory</p>
+            <h2 className="text-4xl sm:text-5xl font-bold uppercase">
+              Memorial<br /><span className="font-light">Wall</span>
+            </h2>
+          </div>
+          <span className="text-sm text-neutral-400">{posts.length} messages</span>
         </div>
 
         {/* Post form */}
-        <div className="mb-16">
+        <div className="bg-white border border-neutral-100 p-8 sm:p-10 mb-12">
           <div className="flex gap-4 mb-6">
             <button
               onClick={() => setPostType('message')}
-              className={`text-sm font-light transition-colors ${
+              className={`text-sm transition-colors flex items-center gap-1.5 ${
                 postType === 'message'
-                  ? 'text-stone-900 underline underline-offset-4 decoration-stone-900'
-                  : 'text-stone-400 hover:text-stone-600'
+                  ? 'text-black font-medium'
+                  : 'text-neutral-400 hover:text-neutral-600'
               }`}
             >
-              Write a message
+              <MessageCircle className="w-4 h-4" /> Write a message
             </button>
             <button
               onClick={() => setPostType('candle')}
-              className={`text-sm font-light transition-colors flex items-center gap-1.5 ${
+              className={`text-sm transition-colors flex items-center gap-1.5 ${
                 postType === 'candle'
-                  ? 'text-stone-900 underline underline-offset-4 decoration-stone-900'
-                  : 'text-stone-400 hover:text-stone-600'
+                  ? 'text-black font-medium'
+                  : 'text-neutral-400 hover:text-neutral-600'
               }`}
             >
-              <Flame className="w-3.5 h-3.5" />
-              Light a candle
+              <Flame className="w-4 h-4" /> Light a candle
             </button>
           </div>
 
@@ -134,7 +136,7 @@ export default function MemorialWall() {
                 type="text"
                 value={newPost.author}
                 onChange={(e) => setNewPost({ ...newPost, author: e.target.value })}
-                className="w-full px-0 py-3 bg-transparent border-b border-stone-200 text-stone-900 text-sm font-light placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
+                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
                 placeholder="Your name *"
                 required
               />
@@ -142,7 +144,7 @@ export default function MemorialWall() {
                 type="text"
                 value={newPost.relationship}
                 onChange={(e) => setNewPost({ ...newPost, relationship: e.target.value })}
-                className="w-full px-0 py-3 bg-transparent border-b border-stone-200 text-stone-900 text-sm font-light placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors"
+                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
                 placeholder="Relationship"
               />
             </div>
@@ -151,61 +153,61 @@ export default function MemorialWall() {
               <textarea
                 value={newPost.message}
                 onChange={(e) => setNewPost({ ...newPost, message: e.target.value })}
-                rows={3}
-                className="w-full px-0 py-3 bg-transparent border-b border-stone-200 text-stone-900 text-sm font-light placeholder-stone-300 focus:outline-none focus:border-stone-900 transition-colors resize-none"
-                placeholder="Share a memory or kind word..."
+                rows={4}
+                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"
+                placeholder="Share a memory, a kind word, or a story about Rebecca..."
                 required
               />
             )}
 
             {postType === 'candle' && (
-              <div className="py-8 text-center">
-                <div className="text-4xl mb-2">🕯️</div>
-                <p className="text-[13px] text-stone-400 font-light">A candle will be lit in Rebecca's memory</p>
+              <div className="py-10 text-center">
+                <div className="text-5xl mb-3">🕯️</div>
+                <p className="text-sm text-neutral-400 font-light">A candle will be lit in Rebecca's memory</p>
               </div>
             )}
 
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-stone-900 text-white text-sm font-light px-6 py-2.5 rounded-full hover:bg-stone-800 transition-colors"
+              className="bg-black text-white text-sm font-medium px-7 py-3 hover:bg-neutral-800 transition-colors inline-flex items-center gap-2"
             >
-              <Send className="w-3.5 h-3.5" />
-              {postType === 'candle' ? 'Light Candle' : 'Post'}
+              <Send className="w-4 h-4" />
+              {postType === 'candle' ? 'Light Candle' : 'Post to Wall'}
             </button>
           </form>
         </div>
 
         {/* Posts */}
-        <div className="divide-y divide-stone-100">
+        <div className="space-y-6">
           {visiblePosts.map((post) => (
-            <div key={post.id} className="py-8 first:pt-0">
+            <div key={post.id} className="bg-white border border-neutral-100 p-8">
               {post.type === 'candle' ? (
                 <div className="text-center py-4">
-                  <div className="text-3xl mb-2">🕯️</div>
-                  <p className="text-sm text-stone-900">{post.author}</p>
-                  <p className="text-[13px] text-stone-400 font-light">lit a candle</p>
+                  <div className="text-4xl mb-3">🕯️</div>
+                  <p className="text-sm font-medium">{post.author}</p>
+                  {post.relationship && <p className="text-[13px] text-neutral-400 font-light">{post.relationship}</p>}
+                  <p className="text-[13px] text-neutral-400 font-light mt-1">lit a candle in Rebecca's memory</p>
                 </div>
               ) : (
                 <>
-                  <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-sm text-stone-900">{post.author}</span>
+                  <div className="flex items-baseline gap-3 mb-4">
+                    <span className="text-sm font-medium">{post.author}</span>
                     {post.relationship && (
-                      <span className="text-[12px] text-stone-400 font-light">{post.relationship}</span>
+                      <span className="text-[12px] text-neutral-400 font-light">{post.relationship}</span>
                     )}
-                    <span className="text-[12px] text-stone-300 font-light ml-auto">{post.date}</span>
+                    <span className="text-[12px] text-neutral-300 font-light ml-auto">{post.date}</span>
                   </div>
-                  <p className="text-[15px] text-stone-500 font-light leading-[1.8]">{post.message}</p>
+                  <p className="text-sm text-neutral-600 font-light leading-[1.85]">{post.message}</p>
                 </>
               )}
-
-              <div className="mt-4">
+              <div className="mt-5 pt-4 border-t border-neutral-100">
                 <button
                   onClick={() => toggleLike(post.id)}
-                  className={`inline-flex items-center gap-1 text-[13px] transition-colors ${
-                    likedPosts.has(post.id) ? 'text-red-500' : 'text-stone-300 hover:text-red-400'
+                  className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
+                    likedPosts.has(post.id) ? 'text-red-500' : 'text-neutral-300 hover:text-red-400'
                   }`}
                 >
-                  <Heart className="w-3.5 h-3.5" fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} />
+                  <Heart className="w-4 h-4" fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} />
                   {post.likes > 0 && <span>{post.likes}</span>}
                 </button>
               </div>
@@ -216,15 +218,13 @@ export default function MemorialWall() {
         {posts.length > 4 && !showAll && (
           <button
             onClick={() => setShowAll(true)}
-            className="flex items-center gap-1.5 mx-auto mt-8 text-sm text-stone-400 hover:text-stone-900 font-light transition-colors"
+            className="flex items-center gap-2 mx-auto mt-8 text-sm text-neutral-500 hover:text-black transition-colors"
           >
             <ChevronDown className="w-4 h-4" />
-            Show all {posts.length}
+            Show all {posts.length} messages
           </button>
         )}
       </div>
-
-      <div className="rule max-w-6xl mx-auto" />
     </section>
   )
 }

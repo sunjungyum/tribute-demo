@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import Obituary from './components/Obituary'
@@ -9,7 +8,7 @@ import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-black">
       <Navigation />
       <Hero />
       <main>
