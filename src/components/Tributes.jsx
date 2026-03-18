@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flower2, TreePine, Heart, Check } from 'lucide-react'
+import { Flower2, TreePine, Heart, Check, ArrowRight } from 'lucide-react'
 
 const tributeOptions = [
   {
@@ -22,7 +22,7 @@ const tributeOptions = [
     id: 'wildflower',
     icon: Flower2,
     title: 'Garden Wildflowers',
-    description: 'A vibrant mix of seasonal wildflowers she loved',
+    description: "A vibrant mix of seasonal wildflowers she loved",
     price: '$55',
     category: 'flowers',
   },
@@ -30,7 +30,7 @@ const tributeOptions = [
     id: 'memorial-tree',
     icon: TreePine,
     title: 'Memorial Tree',
-    description: 'Plant a tree in Rebecca\'s memory through One Tree Planted',
+    description: "Plant a tree in Rebecca's memory through One Tree Planted",
     price: '$50',
     category: 'trees',
   },
@@ -46,7 +46,7 @@ const tributeOptions = [
     id: 'donation',
     icon: Heart,
     title: 'Charity Donation',
-    description: 'Donate to Nebraska Humane Society in Rebecca\'s name',
+    description: "Donate to Nebraska Humane Society in Rebecca's name",
     price: 'Custom',
     category: 'donation',
   },
@@ -74,26 +74,28 @@ export default function Tributes() {
   }
 
   return (
-    <section id="tributes" className="scroll-mt-20">
-      <div className="max-w-6xl mx-auto px-6 py-24">
-        <p className="text-sm tracking-[0.2em] uppercase text-neutral-400 mb-3">Honor Her Memory</p>
-        <h2 className="text-4xl sm:text-5xl font-bold uppercase mb-4">
-          Send a<br /><span className="font-light">Tribute</span>
-        </h2>
-        <p className="text-sm text-neutral-500 font-light mb-12">
-          Honor Rebecca's memory with flowers, a tree, or a charitable donation.
-        </p>
+    <section id="tributes" className="scroll-mt-16 bg-gray-50">
+      <div className="max-w-[1200px] mx-auto px-6 py-16 sm:py-20">
+        <div className="mb-10">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-gray-400 mb-2">Honor Her Memory</p>
+          <h2 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-black">
+            Send a Tribute
+          </h2>
+          <p className="text-sm text-gray-500 font-light mt-3 max-w-md leading-relaxed">
+            Honor Rebecca's memory with flowers, a memorial tree, or a charitable donation.
+          </p>
+        </div>
 
         {/* Filter tabs */}
-        <div className="flex flex-wrap gap-2 mb-12">
+        <div className="flex flex-wrap gap-6 mb-10">
           {filters.map((f) => (
             <button
               key={f.id}
               onClick={() => setFilter(f.id)}
-              className={`px-5 py-2 text-sm transition-colors ${
+              className={`text-sm pb-1 transition-all duration-200 ${
                 filter === f.id
-                  ? 'bg-black text-white'
-                  : 'text-neutral-500 hover:text-black border border-neutral-200'
+                  ? 'text-black border-b-2 border-black font-medium'
+                  : 'text-gray-400 hover:text-black'
               }`}
             >
               {f.label}
@@ -102,32 +104,43 @@ export default function Tributes() {
         </div>
 
         {/* Tribute grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
           {filtered.map((tribute) => {
             const Icon = tribute.icon
             const isSent = sent.has(tribute.id)
             return (
               <div
                 key={tribute.id}
-                className={`group cursor-pointer ${isSent ? 'opacity-50' : ''}`}
+                className={`group cursor-pointer transition-opacity duration-300 ${isSent ? 'opacity-30 pointer-events-none' : ''}`}
                 onClick={() => !isSent && setSelected(tribute.id)}
               >
-                <div className={`aspect-[4/3] flex items-center justify-center mb-5 transition-colors ${
+                {/* Icon area */}
+                <div className={`aspect-[4/3] flex items-center justify-center mb-4 transition-all duration-200 ${
                   selected === tribute.id
-                    ? 'bg-neutral-100 ring-2 ring-black'
-                    : 'bg-neutral-50 group-hover:bg-neutral-100'
+                    ? 'bg-black'
+                    : 'bg-gray-100 group-hover:bg-gray-200'
                 }`}>
-                  <Icon className="w-12 h-12 text-neutral-300 group-hover:text-neutral-400 transition-colors" strokeWidth={1} />
+                  <Icon
+                    className={`w-10 h-10 transition-colors duration-200 ${
+                      selected === tribute.id
+                        ? 'text-white'
+                        : 'text-gray-300 group-hover:text-gray-400'
+                    }`}
+                    strokeWidth={1}
+                  />
                 </div>
-                <div className="flex items-start justify-between mb-1">
-                  <h3 className="text-sm font-medium">{tribute.title}</h3>
-                  <span className="text-sm font-bold">{tribute.price}</span>
+
+                <div className="flex items-baseline justify-between mb-1">
+                  <h3 className="text-sm font-medium text-black">{tribute.title}</h3>
+                  <span className="text-sm font-bold text-black">{tribute.price}</span>
                 </div>
-                <p className="text-[13px] text-neutral-400 font-light leading-relaxed mb-3">{tribute.description}</p>
+                <p className="text-[13px] text-gray-400 font-light leading-relaxed mb-3">
+                  {tribute.description}
+                </p>
 
                 {isSent ? (
-                  <span className="inline-flex items-center gap-1.5 text-sm text-neutral-500">
-                    <Check className="w-4 h-4" /> Sent
+                  <span className="inline-flex items-center gap-1.5 text-[13px] text-gray-500">
+                    <Check className="w-4 h-4" /> Sent with love
                   </span>
                 ) : selected === tribute.id ? (
                   <button
@@ -135,9 +148,9 @@ export default function Tributes() {
                       e.stopPropagation()
                       handleSend(tribute.id)
                     }}
-                    className="bg-black text-white text-sm px-6 py-2.5 hover:bg-neutral-800 transition-colors"
+                    className="inline-flex items-center gap-2 bg-black text-white text-[13px] px-5 py-2.5 hover:bg-gray-800 transition-colors duration-200"
                   >
-                    Confirm & Send
+                    Confirm & Send <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 ) : null}
               </div>
@@ -145,7 +158,6 @@ export default function Tributes() {
           })}
         </div>
       </div>
-      <div className="rule max-w-6xl mx-auto" />
     </section>
   )
 }

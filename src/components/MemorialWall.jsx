@@ -6,7 +6,7 @@ const initialPosts = [
     id: 1,
     author: 'Sarah Anderson',
     relationship: 'Daughter',
-    date: 'January 9, 2025',
+    date: 'March 1, 2025',
     message: 'Mom, you were the strongest, most loving person I have ever known. Your garden will bloom again this spring, and I will think of you with every flower. I love you endlessly.',
     type: 'message',
     likes: 12,
@@ -15,7 +15,7 @@ const initialPosts = [
     id: 2,
     author: 'Margaret Williams',
     relationship: 'Friend',
-    date: 'January 9, 2025',
+    date: 'March 1, 2025',
     message: 'Becky and I shared 40 years of friendship. She was the first to show up with a casserole when you were sick, and the last to leave a party. Heaven has gained the best hostess. Rest well, dear friend.',
     type: 'message',
     likes: 8,
@@ -24,7 +24,7 @@ const initialPosts = [
     id: 3,
     author: 'David Demuth',
     relationship: 'Son',
-    date: 'January 9, 2025',
+    date: 'March 1, 2025',
     message: '',
     type: 'candle',
     likes: 15,
@@ -33,7 +33,7 @@ const initialPosts = [
     id: 4,
     author: 'Lisa Chen',
     relationship: 'Former Student',
-    date: 'January 10, 2025',
+    date: 'March 2, 2025',
     message: 'Mrs. Demuth was the teacher who changed my life. She believed in me when no one else did. She made third grade magical and showed me that learning could be joyful. Thank you for everything.',
     type: 'message',
     likes: 6,
@@ -42,7 +42,7 @@ const initialPosts = [
     id: 5,
     author: 'Tom & Janet Roberts',
     relationship: 'Neighbors',
-    date: 'January 10, 2025',
+    date: 'March 2, 2025',
     message: 'Rebecca was the heart of our neighborhood. Her Christmas cookie trays, her waves from the garden, her gentle wisdom over the fence. We will miss her dearly.',
     type: 'message',
     likes: 4,
@@ -93,138 +93,153 @@ export default function MemorialWall() {
   }
 
   return (
-    <section id="memorial-wall" className="scroll-mt-20 bg-neutral-50">
-      <div className="max-w-6xl mx-auto px-6 py-24">
-        <div className="flex items-end justify-between mb-16">
+    <section id="memorial-wall" className="scroll-mt-16">
+      <div className="max-w-[1200px] mx-auto px-6 py-16 sm:py-20">
+        <div className="mb-10">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-gray-400 mb-2">Share a Memory</p>
+          <h2 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-black">
+            Memorial Wall
+          </h2>
+          <p className="text-sm text-gray-400 mt-2">{posts.length} tributes shared</p>
+        </div>
+
+        {/* Two-column layout: form left, posts right */}
+        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 lg:gap-16">
+          {/* Compose form */}
           <div>
-            <p className="text-sm tracking-[0.2em] uppercase text-neutral-400 mb-3">Share a Memory</p>
-            <h2 className="text-4xl sm:text-5xl font-bold uppercase">
-              Memorial<br /><span className="font-light">Wall</span>
-            </h2>
-          </div>
-          <span className="text-sm text-neutral-400">{posts.length} messages</span>
-        </div>
-
-        {/* Post form */}
-        <div className="bg-white border border-neutral-100 p-8 sm:p-10 mb-12">
-          <div className="flex gap-4 mb-6">
-            <button
-              onClick={() => setPostType('message')}
-              className={`text-sm transition-colors flex items-center gap-1.5 ${
-                postType === 'message'
-                  ? 'text-black font-medium'
-                  : 'text-neutral-400 hover:text-neutral-600'
-              }`}
-            >
-              <MessageCircle className="w-4 h-4" /> Write a message
-            </button>
-            <button
-              onClick={() => setPostType('candle')}
-              className={`text-sm transition-colors flex items-center gap-1.5 ${
-                postType === 'candle'
-                  ? 'text-black font-medium'
-                  : 'text-neutral-400 hover:text-neutral-600'
-              }`}
-            >
-              <Flame className="w-4 h-4" /> Light a candle
-            </button>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="text"
-                value={newPost.author}
-                onChange={(e) => setNewPost({ ...newPost, author: e.target.value })}
-                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
-                placeholder="Your name *"
-                required
-              />
-              <input
-                type="text"
-                value={newPost.relationship}
-                onChange={(e) => setNewPost({ ...newPost, relationship: e.target.value })}
-                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
-                placeholder="Relationship"
-              />
-            </div>
-
-            {postType === 'message' && (
-              <textarea
-                value={newPost.message}
-                onChange={(e) => setNewPost({ ...newPost, message: e.target.value })}
-                rows={4}
-                className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm font-light placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"
-                placeholder="Share a memory, a kind word, or a story about Rebecca..."
-                required
-              />
-            )}
-
-            {postType === 'candle' && (
-              <div className="py-10 text-center">
-                <div className="text-5xl mb-3">🕯️</div>
-                <p className="text-sm text-neutral-400 font-light">A candle will be lit in Rebecca's memory</p>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="bg-black text-white text-sm font-medium px-7 py-3 hover:bg-neutral-800 transition-colors inline-flex items-center gap-2"
-            >
-              <Send className="w-4 h-4" />
-              {postType === 'candle' ? 'Light Candle' : 'Post to Wall'}
-            </button>
-          </form>
-        </div>
-
-        {/* Posts */}
-        <div className="space-y-6">
-          {visiblePosts.map((post) => (
-            <div key={post.id} className="bg-white border border-neutral-100 p-8">
-              {post.type === 'candle' ? (
-                <div className="text-center py-4">
-                  <div className="text-4xl mb-3">🕯️</div>
-                  <p className="text-sm font-medium">{post.author}</p>
-                  {post.relationship && <p className="text-[13px] text-neutral-400 font-light">{post.relationship}</p>}
-                  <p className="text-[13px] text-neutral-400 font-light mt-1">lit a candle in Rebecca's memory</p>
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-baseline gap-3 mb-4">
-                    <span className="text-sm font-medium">{post.author}</span>
-                    {post.relationship && (
-                      <span className="text-[12px] text-neutral-400 font-light">{post.relationship}</span>
-                    )}
-                    <span className="text-[12px] text-neutral-300 font-light ml-auto">{post.date}</span>
-                  </div>
-                  <p className="text-sm text-neutral-600 font-light leading-[1.85]">{post.message}</p>
-                </>
-              )}
-              <div className="mt-5 pt-4 border-t border-neutral-100">
+            <div className="sticky top-20">
+              {/* Type toggle */}
+              <div className="flex gap-6 mb-6">
                 <button
-                  onClick={() => toggleLike(post.id)}
-                  className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
-                    likedPosts.has(post.id) ? 'text-red-500' : 'text-neutral-300 hover:text-red-400'
+                  onClick={() => setPostType('message')}
+                  className={`text-[13px] transition-all duration-200 flex items-center gap-1.5 pb-1 ${
+                    postType === 'message'
+                      ? 'text-black border-b-2 border-black font-medium'
+                      : 'text-gray-400 hover:text-black'
                   }`}
                 >
-                  <Heart className="w-4 h-4" fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} />
-                  {post.likes > 0 && <span>{post.likes}</span>}
+                  <MessageCircle className="w-4 h-4" /> Write a message
+                </button>
+                <button
+                  onClick={() => setPostType('candle')}
+                  className={`text-[13px] transition-all duration-200 flex items-center gap-1.5 pb-1 ${
+                    postType === 'candle'
+                      ? 'text-black border-b-2 border-black font-medium'
+                      : 'text-gray-400 hover:text-black'
+                  }`}
+                >
+                  <Flame className="w-4 h-4" /> Light a candle
                 </button>
               </div>
-            </div>
-          ))}
-        </div>
 
-        {posts.length > 4 && !showAll && (
-          <button
-            onClick={() => setShowAll(true)}
-            className="flex items-center gap-2 mx-auto mt-8 text-sm text-neutral-500 hover:text-black transition-colors"
-          >
-            <ChevronDown className="w-4 h-4" />
-            Show all {posts.length} messages
-          </button>
-        )}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  value={newPost.author}
+                  onChange={(e) => setNewPost({ ...newPost, author: e.target.value })}
+                  className="w-full px-0 py-3 bg-transparent border-b border-gray-200 text-sm text-black placeholder-gray-300 focus:border-black transition-colors duration-200"
+                  placeholder="Your name"
+                  required
+                />
+                <input
+                  type="text"
+                  value={newPost.relationship}
+                  onChange={(e) => setNewPost({ ...newPost, relationship: e.target.value })}
+                  className="w-full px-0 py-3 bg-transparent border-b border-gray-200 text-sm text-black placeholder-gray-300 focus:border-black transition-colors duration-200"
+                  placeholder="Relationship (optional)"
+                />
+
+                {postType === 'message' && (
+                  <textarea
+                    value={newPost.message}
+                    onChange={(e) => setNewPost({ ...newPost, message: e.target.value })}
+                    rows={4}
+                    className="w-full px-0 py-3 bg-transparent border-b border-gray-200 text-sm text-black placeholder-gray-300 focus:border-black transition-colors duration-200 resize-none"
+                    placeholder="Share a memory, a kind word, or a story about Rebecca..."
+                    required
+                  />
+                )}
+
+                {postType === 'candle' && (
+                  <div className="py-8 text-center">
+                    <div className="text-4xl mb-3">🕯️</div>
+                    <p className="text-sm text-gray-400 font-light italic">
+                      A candle will be lit in Rebecca's memory
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 bg-black text-white text-[13px] px-6 py-3 hover:bg-gray-800 transition-colors duration-200"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  {postType === 'candle' ? 'Light Candle' : 'Post to Wall'}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Posts */}
+          <div className="space-y-0">
+            {visiblePosts.map((post, idx) => (
+              <div
+                key={post.id}
+                className={`py-6 ${idx > 0 ? 'border-t border-gray-200' : ''}`}
+              >
+                {post.type === 'candle' ? (
+                  <div className="flex items-center gap-4">
+                    <span className="text-2xl">🕯️</span>
+                    <div>
+                      <p className="text-sm text-black font-medium">{post.author}</p>
+                      <p className="text-[12px] text-gray-400 font-light">
+                        {post.relationship && `${post.relationship} · `}lit a candle in Rebecca's memory
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm text-gray-600 font-light leading-[1.8] mb-3">
+                      "{post.message}"
+                    </p>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-[13px] font-medium text-black">{post.author}</span>
+                      {post.relationship && (
+                        <span className="text-[11px] text-gray-400">{post.relationship}</span>
+                      )}
+                      <span className="text-[11px] text-gray-300 ml-auto">{post.date}</span>
+                    </div>
+                  </>
+                )}
+
+                <div className="mt-3">
+                  <button
+                    onClick={() => toggleLike(post.id)}
+                    className={`inline-flex items-center gap-1.5 text-[13px] transition-colors duration-200 ${
+                      likedPosts.has(post.id) ? 'text-gray-700' : 'text-gray-300 hover:text-gray-700'
+                    }`}
+                  >
+                    <Heart className="w-3.5 h-3.5" fill={likedPosts.has(post.id) ? 'currentColor' : 'none'} />
+                    {post.likes > 0 && <span>{post.likes}</span>}
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {posts.length > 4 && !showAll && (
+              <button
+                onClick={() => setShowAll(true)}
+                className="flex items-center gap-2 pt-4 text-[13px] text-gray-400 hover:text-black transition-colors duration-200"
+              >
+                <ChevronDown className="w-4 h-4" />
+                View all {posts.length} tributes
+              </button>
+            )}
+          </div>
+        </div>
       </div>
+
+      <div className="divider" />
     </section>
   )
 }
